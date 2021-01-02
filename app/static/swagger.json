@@ -1,0 +1,172 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Webservice que utilize um serviço de previsão do tempo",
+    "version": "1.0.0",
+    "title": "Previsao Tempo API",
+    "contact": {
+      "email": "glorandi.oficial@gmail.com"
+    }
+  },
+  "tags": [
+    {
+      "name": "Cidade",
+      "description": "Tudo sobre info de clima de cidades"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/cidade": {
+      "get": {
+        "tags": [
+          "Cidade"
+        ],
+        "summary": "Encontra a cidade pelo id",
+        "operationId": "findPetsByStatus",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "$ref": "#/definitions/Cidade"
+            }
+          },
+          "400": {
+            "description": "Parâmetros no formato inválido"
+          }
+        }
+      }
+    },
+    "/analise": {
+      "get": {
+        "tags": [
+          "Cidade"
+        ],
+        "summary": "Finds Pets by tags",
+        "description": "Muliple tags can be provided with comma separated strings. Use         tag1, tag2, tag3 for testing.",
+        "operationId": "findPetsByTags",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "data_inicial",
+            "in": "query",
+            "description": "Data inicial da busca",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "data_final",
+            "in": "query",
+            "description": "Data final da busca",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "$ref": "#/definitions/MaiorTemperaturaCidade"
+            }
+          },
+          "400": {
+            "description": "Parâmetros no formato inválido"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Clima": {
+      "type": "object",
+      "properties": {
+        "probalidade": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "precipitacao": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "maxTemp": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "minTemp": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "data": {
+          "type": "string",
+          "example": "Sun, 03 Jan 2021 00:00:00 GMT"
+        }
+      },
+      "xml": {
+        "name": "Clima"
+      }
+    },
+    "Cidade": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string",
+          "example": "São Carlos"
+        },
+        "estado": {
+          "type": "string",
+          "example": "SP"
+        },
+        "pais": {
+          "type": "string",
+          "example": "BR"
+        },
+        "climas": {
+          "type": "array",
+          "xml": {
+            "name": "tag",
+            "wrapped": true
+          },
+          "items": {
+            "$ref": "#/definitions/Clima"
+          }
+        }
+      },
+      "xml": {
+        "name": "Cidade"
+      }
+    },
+    "MaiorTemperaturaCidade": {
+      "type": "object",
+      "properties": {
+        "media": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "maior_temperatura_cidade": {
+          "$ref": "#/definitions/Cidade"
+        }
+      },
+      "xml": {
+        "name": "Cidade"
+      }
+    }
+  }
+}

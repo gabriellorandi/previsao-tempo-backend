@@ -1,0 +1,4 @@
+DEBUG = True
+DEVELOPMENT = True
+SQLALCHEMY_DATABASE_URI = 'sqlite:///db/cidades.sqlite3'
+SQLALCHEMY_TRACK_MODIFICATIONS = False
